@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 60" width="240" height="60">
+  <defs>
+    <linearGradient id="logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff5b2e" />
+      <stop offset="100%" stop-color="#ff2a68" />
+    </linearGradient>
+    <filter id="glow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#ff2a68" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  <!-- Modern Food Cart / Heart Logo Mark -->
+  <g transform="translate(12, 10)">
+    <!-- Steam / Warm Food Waves -->
+    <path d="M14,6 Q16,2 18,6 T22,6" fill="none" stroke="url(#logo-grad)" stroke-width="2" stroke-linecap="round" opacity="0.8">
+      <animate attributeName="d" dur="3s" repeatCount="indefinite" values="M14,6 Q16,2 18,6 T22,6; M14,6 Q15,1 18,5 T22,6; M14,6 Q16,2 18,6 T22,6"/>
+    </path>
+    <!-- Cart Basket Shape -->
+    <path d="M4,10 H9 L12,28 H28 L31,16 H10" fill="none" stroke="url(#logo-grad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"/>
+    <!-- Wheels -->
+    <circle cx="15" cy="35" r="3" fill="#2f3542" />
+    <circle cx="25" cy="35" r="3" fill="#2f3542" />
+    <!-- Heart Accent inside the basket -->
+    <path d="M17,16 C16,14.5 17.5,13.5 18.5,14.5 C19.5,13.5 21,14.5 20,16 C19.2,17.5 18.5,18.5 18.5,18.5 C18.5,18.5 17.8,17.5 17,16 Z" fill="url(#logo-grad)"/>
+  </g>
+  <!-- Text Styling -->
+  <text x="62" y="38" font-family="'Outfit', 'Inter', 'Segoe UI', sans-serif" font-size="28" font-weight="900" letter-spacing="-0.5" fill="#2f3542">Crave<tspan fill="url(#logo-grad)">Cart</tspan></text>
+</svg>

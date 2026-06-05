@@ -1,22 +1,37 @@
-.app-download{
-    margin: auto auto;
-    margin-top: 100px;
-    font-size: max(3vw,20px);
-    text-align: center;
-    font-weight: 500;
+.app-download {
+  margin: auto auto;
+  margin-top: 100px;
+  font-size: max(2.5vw, 22px);
+  text-align: center;
+  font-weight: 600;
+  color: var(--secondary-color);
+  line-height: 1.4;
 }
-.app-download-platforms{
-    display: flex;
-    justify-content: center;
-    gap: max(2vw,10px);
-    margin-top: 40px;
+
+.app-download p span {
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
 }
-.app-download-platforms img{
-    width: max(30vw,120px);
-    max-width: 180px;
-    transition: 0.5s;
-    cursor: pointer;
+
+.app-download-platforms {
+  display: flex;
+  justify-content: center;
+  gap: max(2vw, 15px);
+  margin-top: 30px;
 }
-.app-download-platforms img:hover{
-    transform: scale(1.05);
+
+.app-download-platforms img {
+  width: max(14vw, 140px);
+  max-width: 180px;
+  transition: var(--transition);
+  cursor: pointer;
+  box-shadow: var(--shadow-subtle);
+  border-radius: 8px;
+}
+
+.app-download-platforms img:hover {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }

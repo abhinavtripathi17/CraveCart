@@ -1,15 +1,40 @@
-.navbar{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 4%;
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 6%;
+  background-color: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid #e8e8ed;
 }
-.navbar .logo{
-    width: max(10%,80px);
+
+.navbar .logo {
+  width: 150px;
+  height: auto;
+  cursor: pointer;
 }
-.navbar .profile{
-    width: 40px;
+
+.navbar .profile {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid #ff5b2e;
 }
-.login-conditon{
-    font-size: 20px;
+
+.login-conditon {
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #ff5b2e;
+  border: 1.5px solid #ff5b2e;
+  padding: 6px 16px;
+  border-radius: 50px;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  margin-right: 20px;
+}
+
+.login-conditon:hover {
+  background-color: #ff5b2e;
+  color: white;
+  box-shadow: 0 4px 10px rgba(255, 91, 46, 0.2);
 }

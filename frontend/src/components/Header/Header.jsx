@@ -5,14 +5,15 @@ const Header = () => {
   return (
     <div className="header">
       <div className="header-contents">
-        <h2>Order your favourite food here</h2>
+        <span className="promo-badge">🔥 Free delivery on your first 3 orders!</span>
+        <h2>Elevate Your Dining Experience</h2>
         <p>
-          Choose from a diverse menu featuring a detectable array of dishes
-          crafted with the finest ingredients and culinary expertise. Our
-          mission is to satisfy your cravings and elevate your dining
+          Choose from a diverse menu featuring a delectable array of dishes
+          crafted with the finest ingredients and master-class culinary expertise.
+          Our mission is to satisfy your cravings and elevate your dining
           experience, one delicious meal at a time.
         </p>
-        <button>View Menu</button>
+        <button onClick={() => document.getElementById('explore-menu')?.scrollIntoView({ behavior: 'smooth' })}>View Menu</button>
       </div>
     </div>
   );
