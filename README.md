@@ -40,18 +40,6 @@ cd frontend && npm install
 cd ../backend && npm install
 cd ../admin && npm install
 ```
-
-Create a `.env` file inside the `backend` folder:
-
-```env
-MONGO_URL=YOUR_MONGODB_URI
-JWT_SECRET=YOUR_SECRET_KEY
-SALT=10
-STRIPE_SECRET_KEY=YOUR_STRIPE_SECRET_KEY
-FRONTEND_URL=YOUR_FRONTEND_URL
-PORT=4000
-```
-
 Run the project:
 
 ```bash
