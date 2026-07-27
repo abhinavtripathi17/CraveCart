@@ -23,8 +23,6 @@ CraveCraft is a full-stack MERN food delivery application that enables users to 
 - MongoDB
 - JWT Authentication
 - Bcrypt
-- Stripe
-- Multer
 
 ## ⚙️ Installation
 
