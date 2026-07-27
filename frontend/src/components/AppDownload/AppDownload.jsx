@@ -1,14 +1,27 @@
 import React from 'react'
 import './AppDownload.css'
-import { assets } from '../../assets/frontend_assets/assets'
 
 const AppDownload = () => {
   return (
     <div className='app-download' id='app-download'>
-      <p>For a Better Experience, Download the <br/><span>CraveCart</span> App</p>
-      <div className="app-download-platforms">
-        <img src={assets.play_store} alt="" />
-        <img src={assets.app_store} alt="" />
+      <div className='app-download-content'>
+        <h2>Ready to satisfy your cravings?</h2>
+        <p>Join thousands of happy customers enjoying fast, delicious delivery with <span>CraveCart</span></p>
+        <div className="app-download-features">
+          <div className="feature">
+            <span className="feature-icon">⚡</span>
+            <p>Super Fast</p>
+          </div>
+          <div className="feature">
+            <span className="feature-icon">🍕</span>
+            <p>Fresh Meals</p>
+          </div>
+          <div className="feature">
+            <span className="feature-icon">✨</span>
+            <p>Great Taste</p>
+          </div>
+        </div>
+        <button className="cta-button">Order Now</button>
       </div>
     </div>
   )
