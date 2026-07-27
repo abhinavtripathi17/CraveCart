@@ -21,6 +21,7 @@ const PlaceOrder = () => {
     country: "",
     phone: "",
   });
+  const [isPlacingOrder, setIsPlacingOrder] = useState(false);
 
   const onChangeHandler = (event) => {
     const name = event.target.name;
@@ -30,6 +31,10 @@ const PlaceOrder = () => {
 
   const placeOrder = async (event) => {
     event.preventDefault();
+    if (isPlacingOrder) {
+      return;
+    }
+
     let orderItems = [];
     food_list.forEach((item) => {
       if (cartItems[item._id] > 0) {
@@ -37,12 +42,21 @@ const PlaceOrder = () => {
         orderItems.push(itemInfo);
       }
     });
+    const itemsTotal = getTotalCartAmount();
+
+    if (!orderItems.length || itemsTotal === 0) {
+      toast.error("Please add available menu items to your cart");
+      navigate("/cart");
+      return;
+    }
+
     let orderData = {
       address: data,
       items: orderItems,
-      amount: getTotalCartAmount() + 2,
+      amount: itemsTotal + 2,
     };
     try {
+      setIsPlacingOrder(true);
       const response = await axios.post(url + "/api/order/place", orderData, {
         headers: { token },
       });
@@ -56,6 +70,8 @@ const PlaceOrder = () => {
       }
     } catch (error) {
       toast.error("Unable to place order");
+    } finally {
+      setIsPlacingOrder(false);
     }
   };
 
@@ -177,7 +193,9 @@ const PlaceOrder = () => {
             <p>Payment Method</p>
             <b>Cash on Delivery</b>
           </div>
-          <button type="submit">PLACE ORDER</button>
+          <button disabled={isPlacingOrder} type="submit">
+            {isPlacingOrder ? "PLACING ORDER..." : "PLACE ORDER"}
+          </button>
         </div>
       </div>
     </form>

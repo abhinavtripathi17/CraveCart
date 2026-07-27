@@ -4,14 +4,33 @@ import userModel from "../models/userModel.js";
 // placing user order for frontend
 const placeOrder = async (req, res) => {
   try {
-    if (!req.body.items?.length) {
+    const orderItems = Array.isArray(req.body.items)
+      ? req.body.items
+          .filter((item) => item && item.name && Number(item.quantity) > 0)
+          .map((item) => ({
+            _id: item._id,
+            name: item.name,
+            price: Number(item.price) || 0,
+            quantity: Number(item.quantity),
+            image: item.image,
+            category: item.category,
+          }))
+      : [];
+
+    if (!orderItems.length) {
       return res.json({ success: false, message: "Cart is empty" });
     }
 
+    const itemsTotal = orderItems.reduce(
+      (total, item) => total + item.price * item.quantity,
+      0
+    );
+    const deliveryFee = itemsTotal > 0 ? 2 : 0;
+
     const newOrder = new orderModel({
       userId: req.body.userId,
-      items: req.body.items,
-      amount: req.body.amount,
+      items: orderItems,
+      amount: itemsTotal + deliveryFee,
       address: req.body.address,
       payment: false,
       paymentMethod: "Cash on Delivery",
@@ -25,8 +44,11 @@ const placeOrder = async (req, res) => {
       orderId: newOrder._id,
     });
   } catch (error) {
-    console.log(error);
-    res.json({ success: false, message: "Error" });
+    console.log("Place order error:", error);
+    res.json({
+      success: false,
+      message: error.message || "Unable to place order",
+    });
   }
 };
 
