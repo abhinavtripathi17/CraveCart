@@ -9,6 +9,7 @@ const orderSchema = new mongoose.Schema({
   date: { type: Date, default: Date.now },
   payment: { type: Boolean, default: false },
   paymentMethod: { type: String, default: "Cash on Delivery" },
+  stripeSessionId: { type: String },
 });
 
 const orderModel =

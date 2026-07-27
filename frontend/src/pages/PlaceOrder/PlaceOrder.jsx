@@ -22,6 +22,7 @@ const PlaceOrder = () => {
     phone: "",
   });
   const [isPlacingOrder, setIsPlacingOrder] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState("Stripe");
 
   const onChangeHandler = (event) => {
     const name = event.target.name;
@@ -54,6 +55,7 @@ const PlaceOrder = () => {
       address: data,
       items: orderItems,
       amount: itemsTotal + 2,
+      paymentMethod,
     };
     try {
       setIsPlacingOrder(true);
@@ -62,6 +64,10 @@ const PlaceOrder = () => {
       });
 
       if (response.data.success) {
+        if (response.data.session_url) {
+          window.location.replace(response.data.session_url);
+          return;
+        }
         clearCart();
         toast.success(response.data.message || "Order placed successfully");
         navigate("/myorders");
@@ -208,10 +214,33 @@ const PlaceOrder = () => {
           </div>
           <div className="payment-method">
             <p>Payment Method</p>
-            <b>Cash on Delivery</b>
+            <label>
+              <input
+                type="radio"
+                name="paymentMethod"
+                value="Stripe"
+                checked={paymentMethod === "Stripe"}
+                onChange={(event) => setPaymentMethod(event.target.value)}
+              />
+              <span>Card / Online Payment</span>
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="paymentMethod"
+                value="Cash on Delivery"
+                checked={paymentMethod === "Cash on Delivery"}
+                onChange={(event) => setPaymentMethod(event.target.value)}
+              />
+              <span>Cash on Delivery</span>
+            </label>
           </div>
           <button disabled={isPlacingOrder} type="submit">
-            {isPlacingOrder ? "PLACING ORDER..." : "PLACE ORDER"}
+            {isPlacingOrder
+              ? "PLACING ORDER..."
+              : paymentMethod === "Stripe"
+              ? "PROCEED TO PAYMENT"
+              : "PLACE ORDER"}
           </button>
         </div>
       </div>
