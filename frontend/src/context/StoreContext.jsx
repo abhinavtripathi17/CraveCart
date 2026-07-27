@@ -63,6 +63,10 @@ const StoreContextProvider = (props) => {
     }
   };
 
+  const clearCart = () => {
+    setCartItems({});
+  };
+
   const getTotalCartAmount = () => {
     let totalAmount = 0;
     for (const item in cartItems) {
@@ -119,6 +123,7 @@ const StoreContextProvider = (props) => {
     setCartItems,
     addToCart,
     removeFromCart,
+    clearCart,
     getTotalCartAmount,
     url,
     token,

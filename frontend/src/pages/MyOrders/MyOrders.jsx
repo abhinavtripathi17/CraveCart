@@ -43,6 +43,7 @@ const MyOrders = () => {
               </p>
               <p>${order.amount}.00</p>
               <p>items: {order.items.length}</p>
+              <p>{order.paymentMethod || "Cash on Delivery"}</p>
               <p>
                 <span>&#x25cf;</span>
                 <b> {order.status}</b>

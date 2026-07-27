@@ -14,6 +14,8 @@ const Cart = () => {
   } = useContext(StoreContext);
 
   const navigate=useNavigate();
+  const totalAmount = getTotalCartAmount();
+  const cartHasItems = totalAmount > 0;
 
   return (
     <div className="cart">
@@ -46,7 +48,9 @@ const Cart = () => {
               </div>
             );
           }
+          return null;
         })}
+        {!cartHasItems && <p className="empty-cart">Your cart is empty.</p>}
       </div>
       <div className="cart-bottom">
         <div className="cart-total">
@@ -54,20 +58,20 @@ const Cart = () => {
           <div>
             <div className="cart-total-details">
               <p>Subtotals</p>
-              <p>${getTotalCartAmount()}</p>
+              <p>${totalAmount}</p>
             </div>
             <hr />
             <div className="cart-total-details">
               <p>Delivery Fee</p>
-              <p>${getTotalCartAmount()===0?0:2}</p>
+              <p>${cartHasItems ? 2 : 0}</p>
             </div>
             <hr />
             <div className="cart-total-details">
               <b>Total</b>
-              <b>${getTotalCartAmount()===0?0:getTotalCartAmount()+2}</b>
+              <b>${cartHasItems ? totalAmount + 2 : 0}</b>
             </div>
           </div>
-          <button onClick={()=>navigate('/order')}>PROCEED TO CHECKOUT</button>
+          <button disabled={!cartHasItems} onClick={()=>navigate('/order')}>PROCEED TO CHECKOUT</button>
         </div>
         <div className="cart-promocode">
           <div>
