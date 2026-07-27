@@ -14,7 +14,9 @@ const Verify = () => {
 
   useEffect(() => {
     const verifyPayment = async () => {
-      if (hasVerified.current || !token) {
+      const authToken = token || localStorage.getItem("token");
+
+      if (hasVerified.current || !authToken) {
         return;
       }
 
@@ -33,7 +35,7 @@ const Verify = () => {
         const response = await axios.post(
           url + "/api/order/verify",
           { success, orderId, session_id: sessionId },
-          { headers: { token } }
+          { headers: { token: authToken } }
         );
 
         if (response.data.success) {

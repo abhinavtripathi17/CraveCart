@@ -14,7 +14,12 @@ const StoreContextProvider = (props) => {
       return {};
     }
   });
-  const url = window.location.hostname === "localhost" ? "http://localhost:4000" : "https://food-delivery-app-uquc.onrender.com";
+  const url = (
+    import.meta.env.VITE_BACKEND_URL ||
+    (window.location.hostname === "localhost"
+      ? "http://localhost:4000"
+      : "https://food-delivery-app-uquc.onrender.com")
+  ).replace(/\/$/, "");
   const [token, setToken] = useState("");
   const [food_list, setFoodList] = useState(defaultFoodList);
   const [searchQuery, setSearchQuery] = useState("");

@@ -6,8 +6,16 @@ const stripe = process.env.STRIPE_SECRET_KEY
   ? new Stripe(process.env.STRIPE_SECRET_KEY)
   : null;
 
-const getFrontendUrl = (req) =>
-  process.env.FRONTEND_URL || req.get("origin") || "http://localhost:5173";
+const normalizeUrl = (url) => url?.trim().replace(/\/$/, "");
+
+const getFrontendUrl = (req) => {
+  const configuredUrl = (process.env.FRONTEND_URL || "")
+    .split(",")
+    .map(normalizeUrl)
+    .find(Boolean);
+
+  return normalizeUrl(configuredUrl || req.get("origin")) || "http://localhost:5173";
+};
 
 // placing user order for frontend
 const placeOrder = async (req, res) => {

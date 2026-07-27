@@ -13,17 +13,22 @@ const port =process.env.PORT || 4000;
 
 //middlewares
 app.use(express.json());
+const normalizeOrigin = (origin) => origin?.trim().replace(/\/$/, "");
 const allowedOrigins = [
   "https://cravecraftabhinavtripathi.vercel.app",
-  process.env.FRONTEND_URL,
-].filter(Boolean);
+  ...(process.env.FRONTEND_URL || "")
+    .split(",")
+    .map(normalizeOrigin)
+    .filter(Boolean),
+];
 
 app.use(cors({
   origin: (origin, callback) => {
+    const requestOrigin = normalizeOrigin(origin);
     if (
-      !origin ||
-      allowedOrigins.includes(origin) ||
-      /^http:\/\/(localhost|127\.0\.0\.1):\d+$/.test(origin)
+      !requestOrigin ||
+      allowedOrigins.includes(requestOrigin) ||
+      /^http:\/\/(localhost|127\.0\.0\.1):\d+$/.test(requestOrigin)
     ) {
       return callback(null, true);
     }
