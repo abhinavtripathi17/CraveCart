@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom'
 const PlaceOrder = () => {
   const navigate= useNavigate();
 
-  const { getTotalCartAmount, token, food_list, cartItems, url, clearCart } =
+  const { getTotalCartAmount, token, setToken, food_list, cartItems, url, clearCart } =
     useContext(StoreContext);
   const [data, setData] = useState({
     firstName: "",
@@ -66,10 +66,27 @@ const PlaceOrder = () => {
         toast.success(response.data.message || "Order placed successfully");
         navigate("/myorders");
       } else {
-        toast.error(response.data.message || "Unable to place order");
+        const message = response.data.message || "Unable to place order";
+        toast.error(message);
+        if (
+          message.toLowerCase().includes("login") ||
+          message.toLowerCase().includes("session") ||
+          message.toLowerCase().includes("authorized")
+        ) {
+          localStorage.removeItem("token");
+          setToken("");
+          navigate("/cart");
+        }
       }
     } catch (error) {
-      toast.error("Unable to place order");
+      const message =
+        error.response?.data?.message || error.message || "Unable to place order";
+      toast.error(message);
+      if (error.response?.status === 401) {
+        localStorage.removeItem("token");
+        setToken("");
+        navigate("/cart");
+      }
     } finally {
       setIsPlacingOrder(false);
     }

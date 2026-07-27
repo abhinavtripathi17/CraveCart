@@ -28,14 +28,22 @@ const LoginPopup = ({ setShowLogin }) => {
     } else {
       newUrl += "/api/user/register";
     }
-    const response = await axios.post(newUrl, data);
-    if (response.data.success) {
-      setToken(response.data.token);
-      localStorage.setItem("token", response.data.token);
-      toast.success("Login Successfully")
-      setShowLogin(false);
-    }else{
-      toast.error(response.data.message);
+    try {
+      const response = await axios.post(newUrl, data);
+      if (response.data.success) {
+        setToken(response.data.token);
+        localStorage.setItem("token", response.data.token);
+        toast.success(currentState === "Sign Up" ? "Account created" : "Login Successfully");
+        setShowLogin(false);
+      } else {
+        toast.error(response.data.message || "Unable to continue");
+      }
+    } catch (error) {
+      const message =
+        error.response?.data?.message ||
+        error.message ||
+        "Unable to connect to server";
+      toast.error(message);
     }
   };
   return (

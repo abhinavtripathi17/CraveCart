@@ -33,7 +33,7 @@ const loginUser = async (req, res) => {
 // Create token
 
 const createToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET);
+  return jwt.sign({ id }, process.env.JWT_SECRET || "tomato_secret_key_2024");
 };
 
 // register user
@@ -51,7 +51,7 @@ const registerUser = async (req, res) => {
     if (!validator.isEmail(email)) {
       return res.json({ success: false, message: "Please enter valid email" });
     }
-    if (password.length < 8) {
+    if (!password || password.length < 8) {
       return res.json({
         success: false,
         message: "Please enter strong password",
@@ -60,7 +60,8 @@ const registerUser = async (req, res) => {
 
     // hashing user password
 
-    const salt = await bcrypt.genSalt(Number(process.env.SALT));
+    const saltRounds = Number(process.env.SALT) || 10;
+    const salt = await bcrypt.genSalt(saltRounds);
     const hashedPassword = await bcrypt.hash(password, salt);
 
     const isFirstUser = (await userModel.countDocuments({})) === 0;
@@ -77,8 +78,11 @@ const registerUser = async (req, res) => {
     const token = createToken(user._id);
     res.json({ success: true, token, role});
   } catch (error) {
-    console.log(error);
-    res.json({ success: false, message: "Error" });
+    console.log("Register error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error. Please try again later.",
+    });
   }
 };
 

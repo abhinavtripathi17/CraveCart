@@ -13,13 +13,23 @@ const port =process.env.PORT || 4000;
 
 //middlewares
 app.use(express.json());
+const allowedOrigins = [
+  "https://cravecraftabhinavtripathi.vercel.app",
+  process.env.FRONTEND_URL,
+].filter(Boolean);
+
 app.use(cors({
-  origin: [
-    "http://localhost:5173",
-    "http://localhost:5174",
-    "https://cravecraftabhinavtripathi.vercel.app",
-    process.env.FRONTEND_URL
-  ].filter(Boolean),
+  origin: (origin, callback) => {
+    if (
+      !origin ||
+      allowedOrigins.includes(origin) ||
+      /^http:\/\/(localhost|127\.0\.0\.1):\d+$/.test(origin)
+    ) {
+      return callback(null, true);
+    }
+
+    return callback(new Error("Not allowed by CORS"));
+  },
   credentials: true
 }));
 
@@ -34,7 +44,7 @@ app.use("/api/cart", cartRouter);
 app.use("/api/order", orderRouter);
 
 app.get("/", (req, res) => {
-  res.send("API Working");
+  res.json({ message: "API Working", checkout: "cash-on-delivery" });
 });
 
 app.listen(port, () => {

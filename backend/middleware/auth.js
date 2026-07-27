@@ -10,8 +10,11 @@ const authMiddleware = async (req, res, next) => {
     req.body.userId = token_decode.id;
     next();
   } catch (error) {
-    console.log(error);
-    res.json({success:false,message:"Error"});
+    console.log("Auth error:", error.message);
+    res.status(401).json({
+      success: false,
+      message: "Session expired. Please login again.",
+    });
   }
 };
 export default authMiddleware;
