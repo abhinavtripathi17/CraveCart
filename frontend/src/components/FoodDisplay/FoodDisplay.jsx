@@ -2,18 +2,12 @@ import React, { useContext } from "react";
 import "./FoodDisplay.css";
 import { StoreContext } from "../../context/StoreContext";
 import FoodItem from "../FoodItem/FoodItem";
+import { filterFoodItems } from "../../utils/menuUtils";
 
 const FoodDisplay = ({ category }) => {
   const { food_list, searchQuery } = useContext(StoreContext);
 
-  const filteredList = food_list.filter((item) => {
-    const matchesCategory = category === "All" || category === item.category;
-    const matchesSearch =
-      !searchQuery ||
-      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.description.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
+  const filteredList = filterFoodItems(food_list, category, searchQuery);
 
   return (
     <div className="food-display" id="food-display">

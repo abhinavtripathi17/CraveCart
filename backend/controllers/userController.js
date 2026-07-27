@@ -8,20 +8,25 @@ import validator from "validator";
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
   try {
+    // Validate input
+    if (!email || !password) {
+      return res.json({ success: false, message: "Please provide email and password" });
+    }
+
     const user = await userModel.findOne({ email });
     if (!user) {
-      return res.json({ success: false, message: "User Doesn't exist" });
+      return res.json({ success: false, message: "User doesn't exist" });
     }
-    const isMatch =await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.json({ success: false, message: "Invalid Credentials" });
+      return res.json({ success: false, message: "Invalid credentials" });
     }
-    const role=user.role;
+    const role = user.role;
     const token = createToken(user._id);
-    res.json({ success: true, token,role });
+    res.json({ success: true, token, role });
   } catch (error) {
-    console.log(error);
-    res.json({ success: false, message: "Error" });
+    console.log("Login error:", error);
+    res.status(500).json({ success: false, message: "Server error. Please try again later." });
   }
 };
 

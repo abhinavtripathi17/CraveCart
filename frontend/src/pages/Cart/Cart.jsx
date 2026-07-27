@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import "./Cart.css";
 import { StoreContext } from "../../context/StoreContext";
 import { useNavigate } from "react-router-dom";
+import { getFoodImageSrc } from "../../utils/imageUtils";
 
 const Cart = () => {
   const {
@@ -32,7 +33,7 @@ const Cart = () => {
             return (
               <div key={item._id}>
                 <div className="cart-items-title cart-items-item">
-                  <img src={url+"/images/"+item.image} alt="" />
+                  <img src={getFoodImageSrc(item.image, url)} alt={item.name} />
                   <p>{item.name}</p>
                   <p>${item.price}</p>
                   <p>{cartItems[item._id]}</p>
