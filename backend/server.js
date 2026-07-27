@@ -47,6 +47,18 @@ app.get("/", (req, res) => {
   res.json({ message: "API Working", checkout: "cash-on-delivery" });
 });
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`Server Started on port: ${port}`);
+});
+
+server.on("error", (error) => {
+  if (error.code === "EADDRINUSE") {
+    console.error(
+      `Port ${port} is already in use. Stop the other backend process or set a different PORT in backend/.env.`
+    );
+    process.exit(1);
+  }
+
+  console.error("Server failed to start:", error);
+  process.exit(1);
 });
