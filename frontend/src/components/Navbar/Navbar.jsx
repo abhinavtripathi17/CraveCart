@@ -7,7 +7,8 @@ import { toast } from "react-toastify";
 
 const Navbar = ({ setShowLogin }) => {
   const [menu, setMenu] = useState("home");
-  const { getTotalCartAmount, token, setToken } = useContext(StoreContext);
+  const [showSearch, setShowSearch] = useState(false);
+  const { getTotalCartAmount, token, setToken, searchQuery, setSearchQuery } = useContext(StoreContext);
   const navigate=useNavigate();
 
   const logout=()=>{
@@ -52,7 +53,16 @@ const Navbar = ({ setShowLogin }) => {
         </a>
       </ul>
       <div className="navbar-right">
-        <img src={assets.search_icon} alt="" />
+        <div className={`navbar-search-container ${showSearch ? "active" : ""}`}>
+          <input
+            type="text"
+            placeholder="Search dishes..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="navbar-search-input"
+          />
+          <img src={assets.search_icon} alt="" onClick={() => setShowSearch(!showSearch)} />
+        </div>
         <div className="navbar-search-icon">
           <Link to="/cart">
             <img src={assets.basket_icon} alt="" />

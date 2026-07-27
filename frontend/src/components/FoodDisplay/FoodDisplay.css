@@ -12,3 +12,15 @@
     gap: 30px;
     row-gap: 50px;
 }
+.no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 20px;
+  font-size: 18px;
+  color: var(--text-muted);
+  background-color: var(--bg-light);
+  border-radius: var(--border-radius-md);
+  border: 1px dashed var(--border-color);
+  margin-top: 20px;
+  animation: fadeIn 0.3s ease-out;
+}

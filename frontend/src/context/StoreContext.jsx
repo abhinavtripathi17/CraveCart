@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState, useCallback } from "react";
 import { toast } from "react-toastify";
 
 export const StoreContext = createContext(null);
@@ -9,6 +9,7 @@ const StoreContextProvider = (props) => {
   const url = window.location.hostname === "localhost" ? "http://localhost:4000" : "https://food-delivery-app-uquc.onrender.com";
   const [token, setToken] = useState("");
   const [food_list, setFoodList] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const addToCart = async (itemId) => {
     if (!cartItems[itemId]) {
@@ -59,23 +60,23 @@ const StoreContextProvider = (props) => {
     return totalAmount;
   };
 
-  const fetchFoodList = async () => {
+  const fetchFoodList = useCallback(async () => {
     const response = await axios.get(url + "/api/food/list");
     if (response.data.success) {
       setFoodList(response.data.data);
     } else {
       alert("Error! Products are not fetching..");
     }
-  };
+  }, [url]);
 
-  const loadCardData = async (token) => {
+  const loadCardData = useCallback(async (token) => {
     const response = await axios.post(
       url + "/api/cart/get",
       {},
       { headers: { token } }
     );
     setCartItems(response.data.cartData);
-  };
+  }, [url]);
 
   useEffect(() => {
     async function loadData() {
@@ -86,7 +87,7 @@ const StoreContextProvider = (props) => {
       }
     }
     loadData();
-  }, []);
+  }, [fetchFoodList, loadCardData]);
 
   const contextValue = {
     food_list,
@@ -98,6 +99,8 @@ const StoreContextProvider = (props) => {
     url,
     token,
     setToken,
+    searchQuery,
+    setSearchQuery,
   };
   return (
     <StoreContext.Provider value={contextValue}>

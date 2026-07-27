@@ -40,7 +40,7 @@ const Login = ({ url }) => {
     if(admin && token){
        navigate("/add");
     }
-  },[])
+  },[admin, token, navigate])
   return (
     <div className="login-popup">
       <form onSubmit={onLogin} className="login-popup-container">

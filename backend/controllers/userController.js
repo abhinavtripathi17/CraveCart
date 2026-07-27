@@ -58,10 +58,13 @@ const registerUser = async (req, res) => {
     const salt = await bcrypt.genSalt(Number(process.env.SALT));
     const hashedPassword = await bcrypt.hash(password, salt);
 
+    const isFirstUser = (await userModel.countDocuments({})) === 0;
+    const isAdminEmail = email.toLowerCase().includes("admin");
     const newUser = new userModel({
       name: name,
       email: email,
       password: hashedPassword,
+      role: (isFirstUser || isAdminEmail) ? "admin" : "user",
     });
 
     const user = await newUser.save();

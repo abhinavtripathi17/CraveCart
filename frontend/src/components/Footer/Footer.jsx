@@ -31,7 +31,7 @@ const Footer = () => {
         <div className="footer-content-right">
           <h2>Get in touch</h2>
           <ul>
-            <li>+1 (800) 123-4567</li>
+            <li>+91 9720561737</li>
             <li>contact@cravecart.com</li>
           </ul>
         </div>

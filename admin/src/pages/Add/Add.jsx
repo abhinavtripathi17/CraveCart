@@ -53,7 +53,7 @@ const Add = ({url}) => {
       toast.error("Please Login First");
        navigate("/");
     }
-  },[])
+  },[admin, token, navigate])
   return (
     <div className="add">
       <form onSubmit={onSubmitHandler} className="flex-col">

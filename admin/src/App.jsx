@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Navbar from "./components/Navbar/Navbar";
 import Sidebar from "./components/Sidebar/Sidebar";
 import { Route, Routes } from "react-router-dom";
@@ -8,16 +8,19 @@ import Orders from "./pages/Orders/Orders";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Login from "./components/Login/Login";
+import { StoreContext } from "./context/StoreContext";
 
 const App = () => {
+  const { token, admin } = useContext(StoreContext);
   const url = window.location.hostname === "localhost" ? "http://localhost:4000" : "https://food-delivery-app-uquc.onrender.com";
+  
   return (
     <div>
       <ToastContainer />
       <Navbar />
       <hr />
       <div className="app-content">
-        <Sidebar />
+        {token && admin && <Sidebar />}
         <Routes>
           <Route path="/" element={<Login url={url}/>} />
           <Route path="/add" element={<Add url={url}/>} />
